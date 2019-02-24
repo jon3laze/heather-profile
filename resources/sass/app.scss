@@ -1,14 +1,140 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Homenaje|IBM+Plex+Mono|IBM+Plex+Serif');
+
+// Fontawesome
+@import '~@fortawesome/fontawesome-pro/scss/fontawesome';
+@import '~@fortawesome/fontawesome-pro/scss/regular';
+@import '~@fortawesome/fontawesome-pro/scss/light';
+@import '~@fortawesome/fontawesome-pro/scss/solid';
+@import '~@fortawesome/fontawesome-pro/scss/brands';
 
 // Variables
 @import 'variables';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ *
+ * You can see the styles here:
+ * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/preflight";
+ */
+@tailwind preflight;
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+/**
+ * This injects any component classes registered by plugins.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/components";
+ */
+@tailwind components;
+
+/**
+ * Here you would add any of your custom component classes; stuff that you'd
+ * want loaded *before* the utilities so that the utilities could still
+ * override them.
+ *
+ * Example:
+ *
+ * .btn { ... }
+ * .form-input { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "components/buttons";
+ * @import "components/forms";
+ */
+
+/**
+ * This injects all of Tailwind's utility classes, generated based on your
+ * config file.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/utilities";
+ */
+@tailwind utilities;
+
+/**
+ * Here you would add any custom utilities you need that don't come out of the
+ * box with Tailwind.
+ *
+ * Example :
+ *
+ * .bg-pattern-graph-paper { ... }
+ * .skew-45 { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "utilities/background-patterns";
+ * @import "utilities/skew-transforms";
+ */
+
+.form-input {
+    @apply .shadow .appearance-none .border .rounded .bg-blue .w-full .py-2 .px-3 .text-grey .leading-tight;
+
+    &:focus {
+        @apply .outline-none .shadow-outline;
+    }
+}
+
+.about-image {
+    @apply .rounded-lg;
+    height: 250px;
+    width: 250px;
+}
+
+.menu {
+    @apply .flex-col .font-mono .py-5;
+}
+
+.menu-item {
+    @apply .mb-4 .py-2 .pl-4 .bg-blue .text-white .shadow-lg;
+    @apply .no-underline .text-white;
+    display: block;
+}
+
+.active {
+    @apply .bg-grey;
+}
+
+@screen sm {
+    .menu-item {
+        @apply .py-4;
+    }
+}
+
+@screen md {
+    .menu {
+        @apply .absolute .pin-r
+    }
+
+    .menu-item {
+        @apply .pr-32;
+    }
+}
+
+@screen lg {
+    .menu {
+        @apply .absolute .pin-r
+    }
+
+    .menu-item {
+        @apply .pr-32;
+    }
+}
+
+@screen xl {
+    .menu {
+        @apply .absolute .pin-r
+    }
+
+    .menu-item {
+        @apply .pr-32;
+    }
 }
