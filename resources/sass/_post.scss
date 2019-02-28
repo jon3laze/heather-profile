@@ -1,0 +1,45 @@
+.post-body {
+    p:first-child:first-letter {
+        @apply .text-blue .font-serif .text-2xl;
+        line-height: 1;
+    }
+}
+
+@screen sm {
+    .code-toolbar {
+        font-size: .5rem;
+    }
+}
+
+.text-time {
+    @apply .text-grey .text-xs .font-mono;
+}
+
+.post {
+    @apply .bg-white .mx-2 .p-6 .flex .flex-col .justify-between .leading-normal .shadow;
+
+    .post-body {
+        @apply .text-grey .text-base .font-serif;
+    }
+}
+
+.post-snub {
+    &:hover {
+        @apply .shadow-xl;
+    }
+    position: relative;
+    @apply .mb-4;
+
+    .post-snub-link {
+        @apply .w-full .no-underline .font-bold .font-sans .text-grey .text-center .py-2;
+        width: 100%;
+        height: auto;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+
+        &:hover {
+            @apply .bg-grey-lightest .text-blue;
+        }
+    }
+}

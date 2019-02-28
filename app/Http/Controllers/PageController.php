@@ -53,4 +53,14 @@ class PageController extends Controller
     {
         return view('pages.contact');
     }
+
+    /**
+     * Show the color scheme page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function color()
+    {
+        return view('pages.color');
+    }
 }

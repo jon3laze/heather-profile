@@ -1,0 +1,36 @@
+.menu {
+    @apply .flex-col .list-reset .font-bold .font-mono .py-5 .mt-3 .absolute .fixed;
+
+    .menu-item {
+        @apply .text-white .shadow .block;
+
+        .menu-item-link {
+            @apply .no-underline .block .p-3 .text-white .linen;
+            &:hover {
+                @apply .shadow-xl .bg-grey-lighter .fabric;
+            }
+        }
+
+        &.disabled {
+            @apply .shadow-none .bg-grey-lightest;
+            .menu-item-link {
+                @apply .text-grey-dark .shadow-inner;
+                background-image: none;
+                &:hover {
+                    @apply .shadow-inner .cursor-not-allowed .bg-grey-lightest;
+                }
+            }
+        }
+
+        &.active {
+            @apply .shadow-none;
+            .menu-item-link {
+                @apply .bg-grey-light .text-blue .fabric .cursor-default;
+                &:hover {
+                    @apply .shadow-none;
+                }
+            }
+        }
+
+    }
+}

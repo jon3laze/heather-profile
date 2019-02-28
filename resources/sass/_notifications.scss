@@ -1,0 +1,34 @@
+
+.dropdown {
+
+    @apply .relative;
+
+}
+
+.notifications {
+    @apply .fixed .p-2 .absolute .pin-l .pin-t .m-10 .list-reset .w-auto;
+
+    a {
+        @apply .no-underline .text-blue;
+    }
+
+    .notification-dropdown {
+        @apply .hidden .absolute .list-reset;
+        z-index: 1;
+
+        .notification-item {
+            @apply .p-2 .truncate .w-auto;
+            a {
+                @apply .no-underline .text-blue .text-sm .p-2;
+
+                &:hover {
+                    @apply .bg-blue-lightest;
+                }
+            }
+        }
+    }
+
+    &:hover .notification-dropdown {
+        @apply .inline-block;
+    }
+}

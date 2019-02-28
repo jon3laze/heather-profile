@@ -1,0 +1,11 @@
+.invalid-feedback {
+    @apply .bg-red-lightest .border-l-4 .border-red .text-red-dark .p-4;
+}
+
+.alert-success {
+    @apply .bg-green-lightest .border-l-4 .border-green .text-green-dark .p-4;
+}
+
+.alert {
+    @apply .bg-blue-lightest .border-blue .text-blue-dark .border-t .border-l .border-b  .rounded-l  .w-auto .px-4 .py-3 .absolute .fixed .pin-r .pin-t .mt-10;
+}

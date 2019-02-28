@@ -1,0 +1,18 @@
+.footer {
+    @apply .fixed .pin-x .pin-b .h-8 .bg-grey-lightest .text-grey .mx-auto .w-24 .self-center .rounded-t-full .py-2;
+
+    .footer-copy {
+      @apply .text-center .font-sans .text-lg .self-end;
+    }
+    &:hover {
+        @apply .shadow-inner-xl .text-blue;
+    }
+
+    a {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+}

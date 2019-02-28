@@ -83,6 +83,6 @@ class PageTest extends TestCase
      */
     public function it_has_a_register_page()
     {
-        $this->get('/')
+        $this->get('/')->assertStatus(200);
     }
 }

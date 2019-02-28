@@ -11,17 +11,11 @@
 
                 <input id="email"
                     type="email"
-                    class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} form-input"
+                    class="form-control form-input"
                     name="email"
                     value="{{ old('email') }}"
                     required
                     autofocus>
-
-                @if ($errors->has('email'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('email') }}</strong>
-                    </span>
-                @endif
             </div>
 
             <div class="mb-3">
@@ -29,15 +23,9 @@
 
                 <input id="password"
                     type="password"
-                    class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} form-input"
+                    class="form-control form-input"
                     name="password"
                     required>
-
-                @if ($errors->has('password'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                @endif
             </div>
 
             <div class="mb-3 flex justify-end p-3">
@@ -52,17 +40,18 @@
             </div>
 
             <div class="mb-3 flex justify-center">
-                <button type="submit" class="mr-2 bg-blue shadow text-white font-mono text-sm py-2 px-4 rounded">
+                <button type="submit" class="button">
                     {{ __('Login') }}
                 </button>
 
                 @if (Route::has('password.request'))
-                    <a class="text-blue text-sm p-1 tracking-tight no-underline font-mono" href="{{ route('password.request') }}">
+                    <a class="naked-link self-center" href="{{ route('password.request') }}">
                         {{ __('Forgot Your Password?') }}
                     </a>
                 @endif
             </div>
         </form>
+        @include('layouts.error')
     </div>
 </div>
 @endsection
