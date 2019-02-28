@@ -7,6 +7,8 @@
 
 require('./bootstrap');
 
+require('./prism');
+
 window.Vue = require('vue');
 
 /**

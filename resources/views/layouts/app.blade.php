@@ -40,6 +40,22 @@
                 <a class="menu-item {{ Route::is('contact') ? 'active' : '' }}" href="/contact">
                     Contact
                 </a>
+                @guest
+                    <a class="no-underline text-white flex justify-end" href="/login">
+                        Login
+                    </a>
+                @else
+                    <a class="menu-item"
+                        href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @endguest
             </div>
         </header>
 
