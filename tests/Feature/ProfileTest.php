@@ -33,6 +33,8 @@ class ProfileTest extends TestCase
      */
     public function profiles_display_all_posts_by_user()
     {
+        $this->withoutExceptionHandling();
+
         $this->signIn();
 
         $post = factory('App\Post')->create(['user_id' => auth()->id()]);

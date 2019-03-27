@@ -18,7 +18,7 @@
             </div>
 
             <div class="mb-6 flex justify-center">
-                <button type="submit" class="button">
+                <button type="submit" class="btn btn-fancy">
                     {{ __('Send Password Reset Link') }}
                 </button>
             </div>

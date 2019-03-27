@@ -1,7 +1,9 @@
 <template>
-    <div class="alert" role="alert" v-show="show">
-        <p class="text-sm">{{ body }}</p>
-    </div>
+    <div class="alert"
+        :class="'alert-'+level"
+        role="alert"
+        v-show="show"
+        v-text="body"></div>
 </template>
 
 <script>
@@ -10,24 +12,28 @@
 
         data() {
             return {
-                body: '',
+                body: this.message,
+                level: 'default',
                 show: false
             }
         },
 
         created() {
             if(this.message) {
-                this.flash(this.message);
+                this.flash();
             }
 
-            window.events.$on('flash', message => this.flash(message));
+            window.events.$on('flash', data => this.flash(data));
         },
 
         methods: {
-            flash(message) {
-                this.body = message;
-                this.show = true;
+            flash(data) {
+                if(data) {
+                    this.body = data.message;
+                    this.level = data.level;
+                }
 
+                this.show = true;
                 this.hide();
             },
 

@@ -9,14 +9,6 @@ require('./bootstrap');
 
 require('./prism');
 
-import fontawesome from '@fortawesome/fontawesome-pro/js/fontawesome';
-import { far } from '@fortawesome/fontawesome-pro/js/regular';
-import { fal } from '@fortawesome/fontawesome-pro/js/light';
-import { fas } from '@fortawesome/fontawesome-pro/js/solid';
-import { fab } from  '@fortawesome/fontawesome-pro/js/brands';
-
-//fontawesome.library.add([far, fal, fas, fab]);
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -31,6 +23,7 @@ import { fab } from  '@fortawesome/fontawesome-pro/js/brands';
 Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('paginator', require('./components/Paginator.vue').default);
 Vue.component('user-notification', require('./components/UserNotification.vue').default);
+Vue.component('avatar-form', require('./components/AvatarForm.vue').default);
 
 Vue.component('post-view', require('./pages/Post.vue').default);
 

@@ -30,7 +30,7 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        return $user->id == 318;
+        return true;
     }
 
     /**

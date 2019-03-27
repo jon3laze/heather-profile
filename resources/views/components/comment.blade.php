@@ -1,5 +1,5 @@
 <comment :attributes="{{ $comment }}" inline-template v-cloak>
-    <div id="{{ $id }}" class="bg-white m-2 p-4 flex flex-col justify-between leading-normal shadow">
+    <div id="{{ $id }}" class="comment">
         <div class="mx-4">
             <div class="text-blue text-left font-bold text-xl mb-2 font-sans">
                 {{ $name }} <span class="text-sm text-grey">said...</span>
@@ -13,15 +13,15 @@
                         v-model="body"
                         ></textarea>
                 <div class="my-3 flex justify-around">
-                    <button class="bg-green-lightest text-green w-1/4 p-2 rounded-full" @click="update">
-                        <i class="fal fa-check"></i>
+                    <button class="btn btn-success w-1/4 rounded-full" @click="update">
+                        <font-awesome-icon icon="['fal', 'check']"></font-awesome-icon>
                     </button>
-                    <button class="bg-red-lightest text-red w-1/4 p-2 rounded-full" @click="editing = false">
-                        <i class="fal fa-times"></i>
+                    <button class="btn btn-danger w-1/4 rounded-full" @click="editing = false">
+                        <font-awesome-icon icon="['fal', 'times']"></font-awesome-icon>
                     </button>
                 </div>
             </div>
-            <div class="text-grey text-base font-serif overflow-auto" v-else v-html="body">
+            <div class="comment-body" v-else v-html="body">
                 {!! $body !!}
             </div>
             <p class="text-time text-right my-2">
@@ -31,15 +31,15 @@
         <div class="flex justify-end">
             @can('update', $comment)
                 <div class="p-1">
-                    <button class="text-blue hover:text-blue-lighter hover:shadow-xl" @click="editing = true">
-                        <i class="fal fa-edit"></i>
+                    <button class="btn btn-info" @click="editing = true">
+                        <font-awesome-icon icon="['far', 'edit']"></font-awesome-icon>
                     </button>
                 </div>
             @endcan
             @can('delete', $comment)
                 <div class="p-1">
-                    <button class="text-red hover:text-red-lighter hover:shadow-xl" @click="destroy">
-                        <i class="fal fa-trash-alt"></i>
+                    <button class="btn btn-danger" @click="destroy">
+                        <font-awesome-icon icon="['far', 'trash-alt']"></font-awesome-icon>
                     </button>
                 </div>
             @endcan

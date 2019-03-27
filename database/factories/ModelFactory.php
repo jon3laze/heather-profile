@@ -25,15 +25,18 @@ $factory->define(App\User::class, function (Faker $faker) {
 });
 
 $factory->define(App\Post::class, function (Faker $faker) {
+    $title = Str::limit($faker->catchPhrase, 50, '');
     return [
+        'slug' => Str::slug($title, '-'),
         'user_id' => function () {
             return factory('App\User')->create()->id;
         },
         'category_id' => function () {
             return factory('App\Category')->create()->id;
         },
-        'title' => $faker->sentence,
+        'title' => $title,
         'body' => $faker->paragraph,
+        'locked' => false
     ];
 });
 
@@ -50,7 +53,7 @@ $factory->define(App\Comment::class, function (Faker $faker) {
 });
 
 $factory->define(App\Category::class, function (Faker $faker) {
-    $name = $faker->catchPhrase;
+    $name = Str::limit($faker->catchPhrase, 20, '');
     return [
         'name' => $name,
         'slug' => Str::slug($name, '-'),
@@ -66,5 +69,18 @@ $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function
         },
         'notifiable_type' => 'App\User',
         'data' => ['message' => $faker->sentence]
+    ];
+});
+
+$factory->state(App\User::class, 'administrator', function () {
+    return [
+        'id' => 1
+    ];
+});
+
+$factory->state(App\User::class, 'user', function () {
+    $id = App\User::max('id') + 2;
+    return [
+        'id' => $id
     ];
 });

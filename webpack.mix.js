@@ -15,4 +15,5 @@ require('laravel-mix-tailwind');
 
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
+   .copy('node_modules/at.js/dist/css/jquery.atwho.css', 'public/css/vendor')
    .tailwind();

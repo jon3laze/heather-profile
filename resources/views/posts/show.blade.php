@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@section('head')
+<link href="/css/vendor/jquery.atwho.css" rel="stylesheet">
+@endsection
+
 @section('content')
-<post-view inline-template>
+<post-view :post="{{ $post }}" inline-template>
     <div class="max-w-md w-full lg:flex mx-auto">
         @component('components.post')
             @slot('class', 'post')
@@ -27,7 +31,27 @@
                 {!! $post->body !!}
             @endslot
             @slot('link')
-                <subscribe-button :active="{{ json_encode($post->hasSubscription) }}"></subscribe-button>
+                <div class="flex justify-between">
+                    <subscribe-button
+                        :active="{{ json_encode($post->hasSubscription) }}"
+                        v-if="signedIn">
+                    </subscribe-button>
+                    <div class="flex justify-between self-end" v-if="authorize('owns', post)">
+                        <button class="btn text-blue" @click="editing = true">
+                            <font-awesome-icon :icon="['far', 'edit']"></font-awesome-icon>
+                        </button>
+                        <button class="btn text-red" @click="destroy">
+                            <font-awesome-icon :icon="['far', 'trash-alt']"></font-awesome-icon>
+                        </button>
+                        <button
+                            class="btn btn-engrave"
+                            v-if="authorize('isAdmin')"
+                            @click="toggleLock">
+                                <font-awesome-icon :icon="['fas', 'unlock-alt']" class="text-grey" v-show="! locked"></font-awesome-icon>
+                                <font-awesome-icon :icon="['fas', 'lock-alt']" class="text-grey" v-show="locked"></font-awesome-icon>
+                        </button>
+                    </div>
+                </div>
             @endslot
         @endcomponent
 

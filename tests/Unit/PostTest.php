@@ -2,7 +2,10 @@
 
 namespace Tests\Unit;
 
+use App\Post;
 use Tests\TestCase;
+use App\Notifications\PostWasUpdated;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PostTest extends TestCase
@@ -10,16 +13,16 @@ class PostTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @test    it has a category in the path.
+     * @test    it has a path.
      *
      * @author    Jon Ouellette
      * @return    void
      */
-    public function it_has_a_category_in_the_path()
+    public function it_has_a_path()
     {
         $post = factory('App\Post')->create();
 
-        $this->assertEquals("/posts/{$post->category->slug}/{$post->id}", $post->path());
+        $this->assertEquals("/posts/{$post->category->slug}/{$post->slug}", $post->path());
     }
 
     /**
@@ -64,6 +67,28 @@ class PostTest extends TestCase
         ]);
 
         $this->assertCount(1, $post->comments);
+    }
+
+    /**
+     * @test    it notifies subscribers when a comment is added.
+     *
+     * @author    Jon Ouellette
+     * @return    void
+     */
+    public function it_notifies_subscribers_when_a_comment_is_added()
+    {
+        Notification::fake();
+
+        $post = factory('App\Post')->create();
+
+        $this->signIn();
+
+        $post->subscribe()->addComment([
+            'body' => 'Foobar',
+            'user_id' => 999
+        ]);
+
+        Notification::assertSentTo(auth()->user(), PostWasUpdated::class);
     }
 
     /**
@@ -131,5 +156,64 @@ class PostTest extends TestCase
         $post->subscribe();
 
         $this->assertTrue($post->hasSubscription);
+    }
+
+    /**
+     * @test    a post can check if the authenticated user has read all comments.
+     *
+     * @author    Jon Ouellette
+     * @return    void
+     */
+    public function a_post_can_check_if_the_authenticated_user_has_read_all_comments()
+    {
+        $this->signIn();
+
+        $post = factory('App\Post')->create();
+
+        $this->assertTrue($post->hasUpdatesFor(auth()->user()));
+
+        auth()->user()->read($post);
+
+        $this->assertFalse($post->hasUpdatesFor(auth()->user()));
+    }
+
+    /**
+     * @test    a post records each visit.
+     *
+     * @author    Jon Ouellette
+     * @return    void
+     */
+    public function a_post_records_each_visit()
+    {
+        $post = factory('App\Post')->make(['id' => 1]);
+
+        $post->visits()->reset();
+
+        $this->assertSame(0, $post->visits()->count());
+
+        $post->visits()->record();
+
+        $this->assertEquals(1, $post->visits()->count());
+
+        $post->visits()->record();
+
+        $this->assertEquals(2, $post->visits()->count());
+    }
+
+    /**
+     * @test    a post can be locked.
+     *
+     * @author    Jon Ouellette
+     * @return    void
+     */
+    public function a_post_can_be_locked()
+    {
+        $post = factory('App\Post')->create();
+
+        $this->assertFalse($post->locked);
+
+        $post->update(['locked' => true]);
+
+        $this->assertTrue($post->locked);
     }
 }

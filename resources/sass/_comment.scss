@@ -1,0 +1,44 @@
+.comment {
+    @apply .bg-white .m-2 .p-4 .flex .flex-col .justify-between .leading-normal .shadow;
+
+    a {
+        @apply .no-underline .text-blue;
+    }
+
+    .comment-avatar {
+        @apply .h-12 .w-12 .rounded-tr-full .rounded-tl-full .rounded-bl-full .mr-2;
+        object-fit: cover;
+    }
+
+    .comment-body {
+        @apply .text-grey .text-base .font-serif .overflow-auto;
+
+        a {
+            @apply .no-underline .text-blue .font-sans;
+
+            &:hover {
+                @apply .font-bold;
+            }
+        }
+    }
+
+    &.comment-default {
+        @apply .bg-white .border-none .text-grey;
+    }
+
+    &.comment-disabled {
+        @apply .bg-grey-lightest .border .border-grey .text-grey;
+    }
+
+    &.comment-info {
+        @apply .bg-blue-lightest .border .border-blue .text-blue-dark;
+    }
+
+    &.comment-danger {
+        @apply .bg-red-lightest .border .border-red .text-red-dark;
+    }
+
+    &.comment-success {
+        @apply .bg-green-lightest .border .border-green .text-green-dark;
+    }
+}

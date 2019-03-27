@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Category;
+use App\Trending;
+use App\Rules\Recaptcha;
+use App\Filters\PostFilters;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,15 +16,18 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Category $category)
+    public function index(Category $category, PostFilters $filters, Trending $trending)
     {
-        if ($category->exists) {
-            $posts = $category->posts()->latest()->paginate(10);
-        } else {
-            $posts = Post::latest()->paginate(10);
+        $posts = $this->getPosts($category, $filters);
+
+        if (request()->wantsJson()) {
+            return $posts;
         }
 
-        return view('posts.index', compact('posts'));
+        return view('posts.index', [
+            'posts' => $posts,
+            'trending' => $trending->get()
+        ]);
     }
 
     /**
@@ -37,15 +43,15 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Recaptcha $recaptcha)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
-            'category_id' => 'required|exists:categories,id'
+        request()->validate([
+            'title' => 'required|spamfree',
+            'body' => 'required|spamfree',
+            'category_id' => 'required|exists:categories,id',
+            'g-recaptcha-response' => ['required', $recaptcha]
         ]);
 
         $post = Post::create([
@@ -54,6 +60,10 @@ class PostController extends Controller
             'title' => request('title'),
             'body' => request('body')
         ]);
+
+        if (request()->wantsJson()) {
+            return response($post, 201);
+        }
 
         return redirect($post->path())
             ->with('flash', 'Article has been published.');
@@ -65,8 +75,16 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($categoryId, Post $post)
+    public function show($categoryId, Post $post, Trending $trending)
     {
+        if (auth()->check()) {
+            auth()->user()->read($post);
+        }
+
+        $trending->push($post);
+
+        $post->visits()->record();
+
         return view('posts.show', compact('post'));
     }
 
@@ -88,9 +106,16 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update($categoryId, Post $post)
     {
-        //
+        $this->authorize('update', $post);
+
+        $post->update(request()->validate([
+            'title' => 'required|spamfree',
+            'body' => 'required|spamfree'
+        ]));
+
+        return $post;
     }
 
     /**
@@ -111,5 +136,16 @@ class PostController extends Controller
 
         return redirect('/posts')
             ->with('flash', 'Article has been destroyed.');
+    }
+
+    protected function getPosts(Category $category, PostFilters $filters)
+    {
+        $posts = Post::latest()->filter($filters);
+
+        if ($category->exists) {
+            $posts->where('category_id', $category->id);
+        }
+
+        return $posts->paginate(10);
     }
 }

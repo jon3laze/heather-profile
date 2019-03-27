@@ -47,7 +47,7 @@ class ActivityTest extends TestCase
 
         $comment = factory('App\Comment')->create();
 
-        $this->assertEquals(2, Activity::count());
+        $this->assertEquals(3, Activity::count());
     }
 
     /**

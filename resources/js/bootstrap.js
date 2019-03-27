@@ -49,11 +49,20 @@ if (token) {
 // window.Pusher = require('pusher-js');
 window.Vue = require('vue');
 
-Vue.prototype.authorize = function(handler) {
-    let user = window.App.user;
+let authorizations = require('./authorizations');
 
-    return user ? handler(user) : false;
+Vue.prototype.authorize = function(...params) {
+
+    if(! window.App.signedIn) return false;
+
+    if(typeof params[0] === 'string') {
+        return authorizations[params[0]](params[1]);
+    }
+
+    return params[0](window.App.user);
 };
+
+Vue.prototype.signedIn = window.App.signedIn;
 
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
@@ -64,6 +73,18 @@ Vue.prototype.authorize = function(handler) {
 //
 window.events = new Vue();
 
-window.flash = function (message) {
-    window.events.$emit('flash', message);
+window.flash = function (message, level = 'default') {
+    window.events.$emit('flash', { message, level });
 };
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { far } from '@fortawesome/pro-regular-svg-icons';
+import { fal } from '@fortawesome/pro-light-svg-icons';
+import { fas } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+library.add(far, fal, fas);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.config.productionTip = false;
+

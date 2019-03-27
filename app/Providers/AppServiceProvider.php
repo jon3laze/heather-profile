@@ -30,5 +30,7 @@ class AppServiceProvider extends ServiceProvider
             });
             $view->with('categories', $categories);
         });
+
+        \Validator::extend('spamfree', 'App\Rules\SpamFree@passes');
     }
 }

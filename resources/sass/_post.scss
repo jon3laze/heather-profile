@@ -23,15 +23,14 @@
     }
 }
 
-.post-snub {
+.post-stub {
     &:hover {
         @apply .shadow-xl;
     }
     position: relative;
-    @apply .mb-4;
 
-    .post-snub-link {
-        @apply .w-full .no-underline .font-bold .font-sans .text-grey .text-center .py-2;
+    .post-stub-link {
+        @apply .w-full .no-underline .font-sans .text-grey .text-center .py-2;
         width: 100%;
         height: auto;
         position: absolute;

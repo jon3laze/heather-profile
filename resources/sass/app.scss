@@ -37,17 +37,27 @@
 // Forms
 @import 'forms';
 
+// Buttons
+@import 'buttons';
+
 // Menu
 @import 'menu';
 
 // Post Meta
 @import 'post';
 
+// Comments
+@import 'comment';
+
 // Footer
 @import 'footer';
 
 body {
     @apply .bg-grey-lightest;
+}
+
+.seperator {
+    @apply .h-px .w-auto .shadow-inner .flex .mb-4;
 }
 
 .about-image {
@@ -69,6 +79,7 @@ body {
 .bg-reset {
     background-image: none;
 }
+
 
 [v-cloak] { display: none; }
 

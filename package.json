@@ -27,7 +27,17 @@
         "vue-template-compiler": "^2.6.7"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.16",
+        "@fortawesome/free-solid-svg-icons": "^5.8.0",
+        "@fortawesome/pro-light-svg-icons": "^5.8.0",
+        "@fortawesome/pro-regular-svg-icons": "^5.8.0",
+        "@fortawesome/pro-solid-svg-icons": "^5.8.0",
+        "@fortawesome/vue-fontawesome": "^0.1.6",
+        "at.js": "^1.5.4",
+        "i": "^0.3.6",
+        "jquery.caret": "^0.3.1",
         "moment": "^2.24.0",
+        "npm": "^6.9.0",
         "prismjs": "^1.15.0"
     }
 }

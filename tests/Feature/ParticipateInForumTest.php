@@ -49,7 +49,7 @@ class ParticipateInForumTest extends TestCase
      */
     public function it_requires_a_body()
     {
-        $this->signIn();
+        $this->withExceptionHandling()->signIn();
 
         $post = factory('App\Post')->create();
         $comment = factory('App\Comment')->make(['body' => null]);
@@ -132,5 +132,45 @@ class ParticipateInForumTest extends TestCase
         $this->signIn();
         $this->patch("/comments/{$comment->id}")
             ->assertStatus(403);
+    }
+
+    /**
+     * @test    comments that contain spam cannot be created.
+     *
+     * @author    Jon Ouellette
+     * @return    void
+     */
+    public function comments_that_contain_spam_cannot_be_created()
+    {
+        $this->signIn();
+
+        $post = factory('App\Post')->create();
+        $comment = factory('App\Comment')->make([
+            'body' => 'Yahoo Customer Support'
+        ]);
+
+        $this->json('post', $post->path() . '/comment', $comment->toArray())
+            ->assertStatus(422);
+    }
+
+    /**
+     * @test    users may only comment once per minute.
+     *
+     * @author    Jon Ouellette
+     * @return    void
+     */
+    public function users_may_only_comment_once_per_minute()
+    {
+        $this->signIn(factory('App\User')->states('user')->create());
+
+        $post = factory('App\Post')->create();
+
+        $comment = factory('App\Comment')->make();
+
+        $this->post($post->path() . '/comment', $comment->toArray())
+            ->assertStatus(201);
+
+        $this->post($post->path() . '/comment', $comment->toArray())
+            ->assertStatus(429);
     }
 }

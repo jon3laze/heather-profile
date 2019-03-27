@@ -9105,9 +9105,6 @@ table {
 }
 
 .alert {
-  background-color: #ecedf0;
-  border-color: #3f4868;
-  color: #39415e;
   border-top-width: 1px;
   border-left-width: 1px;
   border-bottom-width: 1px;
@@ -9123,6 +9120,24 @@ table {
   right: 0;
   top: 0;
   margin-top: 2.5rem;
+}
+
+.alert.alert-default {
+  background-color: #ecedf0;
+  border-color: #3f4868;
+  color: #39415e;
+}
+
+.alert.alert-danger {
+  background-color: #f9e8e8;
+  border-color: #bf1c16;
+  color: #ac1914;
+}
+
+.alert.alert-success {
+  background-color: #e6f0ea;
+  border-color: #04682e;
+  color: #045e29;
 }
 
 .dropdown {
@@ -9201,49 +9216,118 @@ table {
   box-shadow: 0 0 0 3px rgba(52, 144, 220, .5);
 }
 
-.button {
-  margin-right: .5rem;
-  background-color: #3f4868;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
-  color: #fff;
+.btn {
   font-weight: 700;
   font-family: IBM Plex Mono, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  font-size: .875rem;
   padding-top: .5rem;
   padding-bottom: .5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   border-radius: .25rem;
+  margin-right: .25rem;
+}
+
+.btn:focus {
+  outline: 0;
+}
+
+.btn.btn-fancy {
+  background-color: #3f4868;
+  color: #fff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
   background-image: url("/images/black-linen.png");
   background-attachment: fixed;
 }
 
-.button:hover {
+.btn.btn-fancy:hover {
   background-color: #d5d5d0;
   box-shadow: 0 30px 60px 0 rgba(0, 0, 0, .1), 0 10px 30px 0 rgba(0, 0, 0, .08);
   background-image: url("/images/45-degree-fabric-dark.png");
   background-attachment: fixed;
 }
 
-.button.disabled {
-  background-image: none;
+.btn.btn-bell {
+  color: #f9e634;
+  font-size: 1.875rem;
+}
+
+.btn.btn-bell:hover {
+  color: #e0cf2f;
+}
+
+.btn.btn-engrave {
+  background-color: #fff;
   color: #979789;
-  font-weight: 400;
-  background-color: #fff;
-  box-shadow: none;
+  border-style: none;
 }
 
-.button.disabled:hover {
-  background-color: #fff;
-  box-shadow: none;
+.btn.btn-engrave:hover {
+  color: #fa7ea8;
 }
 
-a.naked-link {
+.btn.btn-default {
+  background-color: #fff;
+  border-style: none;
+  color: #979789;
+}
+
+.btn.btn-default:hover {
+  color: #d5d5d0;
+}
+
+.btn.btn-disabled {
+  background-color: #f5f5f3;
+  border-width: 1px;
+  border-color: #979789;
+  color: #979789;
+}
+
+.btn.btn-info {
+  background-color: #ecedf0;
+  border-width: 1px;
+  border-color: #3f4868;
+  color: #39415e;
+}
+
+.btn.btn-info:hover {
+  background-color: #b2b6c3;
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, .1), 0 10px 30px 0 rgba(0, 0, 0, .08);
+}
+
+.btn.btn-danger {
+  background-color: #f9e8e8;
+  border-width: 1px;
+  border-color: #bf1c16;
+  color: #ac1914;
+}
+
+.btn.btn-danger:hover {
+  background-color: #e5a4a2;
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, .1), 0 10px 30px 0 rgba(0, 0, 0, .08);
+}
+
+.btn.btn-success {
+  background-color: #e6f0ea;
+  border-width: 1px;
+  border-color: #04682e;
+  color: #045e29;
+}
+
+.btn.btn-success:hover {
+  background-color: #9bc3ab;
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, .1), 0 10px 30px 0 rgba(0, 0, 0, .08);
+}
+
+.btn.btn-link {
   color: #3f4868;
-  font-size: .875rem;
-  padding: .25rem;
+  font-size: .75rem;
   letter-spacing: -0.05em;
   text-decoration: none;
+}
+
+.btn.btn-link:hover {
+  color: #262b3e;
+  text-decoration: underline;
 }
 
 .menu {
@@ -9351,19 +9435,17 @@ a.naked-link {
   font-family: IBM Plex serif, Constantia, Lucida Bright, Lucidabright, Lucida Serif, Lucida, DejaVu Serif, Bitstream Vera Serif, Liberation Serif, Georgia, serif;
 }
 
-.post-snub {
+.post-stub {
   position: relative;
-  margin-bottom: 1rem;
 }
 
-.post-snub:hover {
+.post-stub:hover {
   box-shadow: 0 30px 60px 0 rgba(0, 0, 0, .1), 0 10px 30px 0 rgba(0, 0, 0, .08);
 }
 
-.post-snub .post-snub-link {
+.post-stub .post-stub-link {
   width: 100%;
   text-decoration: none;
-  font-weight: 700;
   font-family: Homenaje, system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   color: #979789;
   text-align: center;
@@ -9376,9 +9458,87 @@ a.naked-link {
   bottom: 0;
 }
 
-.post-snub .post-snub-link:hover {
+.post-stub .post-stub-link:hover {
   background-color: #f5f5f3;
   color: #3f4868;
+}
+
+.comment {
+  background-color: #fff;
+  margin: .5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  line-height: 1.5;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+}
+
+.comment a {
+  text-decoration: none;
+  color: #3f4868;
+}
+
+.comment .comment-avatar {
+  height: 3rem;
+  width: 3rem;
+  border-top-right-radius: 9999px;
+  border-top-left-radius: 9999px;
+  border-bottom-left-radius: 9999px;
+  margin-right: .5rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.comment .comment-body {
+  color: #979789;
+  font-size: 1rem;
+  font-family: IBM Plex serif, Constantia, Lucida Bright, Lucidabright, Lucida Serif, Lucida, DejaVu Serif, Bitstream Vera Serif, Liberation Serif, Georgia, serif;
+  overflow: auto;
+}
+
+.comment .comment-body a {
+  text-decoration: none;
+  color: #3f4868;
+  font-family: Homenaje, system-ui, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.comment .comment-body a:hover {
+  font-weight: 700;
+}
+
+.comment.comment-default {
+  background-color: #fff;
+  border-style: none;
+  color: #979789;
+}
+
+.comment.comment-disabled {
+  background-color: #f5f5f3;
+  border-width: 1px;
+  border-color: #979789;
+  color: #979789;
+}
+
+.comment.comment-info {
+  background-color: #ecedf0;
+  border-width: 1px;
+  border-color: #3f4868;
+  color: #39415e;
+}
+
+.comment.comment-danger {
+  background-color: #f9e8e8;
+  border-width: 1px;
+  border-color: #bf1c16;
+  color: #ac1914;
+}
+
+.comment.comment-success {
+  background-color: #e6f0ea;
+  border-width: 1px;
+  border-color: #04682e;
+  color: #045e29;
 }
 
 .footer {
@@ -9421,6 +9581,14 @@ a.naked-link {
 
 body {
   background-color: #f5f5f3;
+}
+
+.seperator {
+  height: 1px;
+  width: auto;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, .06);
+  display: flex;
+  margin-bottom: 1rem;
 }
 
 .about-image {

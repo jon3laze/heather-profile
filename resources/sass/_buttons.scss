@@ -1,0 +1,67 @@
+.btn {
+    @apply .font-bold .font-mono .py-2 .px-4 .rounded .mr-1;
+
+    &:focus {
+        @apply .outline-none;
+    }
+
+    &.btn-fancy {
+        @apply .bg-blue .text-white .shadow .linen;
+        &:hover {
+            @apply .bg-grey-lighter .shadow-xl .fabric;
+        }
+    }
+
+    &.btn-bell {
+        @apply .text-yellow .text-3xl;
+        &:hover {
+            @apply .text-yellow-dark;
+        }
+    }
+
+    &.btn-engrave {
+        @apply .bg-white .text-grey .border-none;
+        &:hover {
+            @apply .text-pink-light;
+        }
+    }
+
+    &.btn-default {
+        @apply .bg-white .border-none .text-grey;
+        &:hover {
+            @apply .text-grey-lighter;
+        }
+    }
+
+    &.btn-disabled {
+        @apply .bg-grey-lightest .border .border-grey .text-grey;
+    }
+
+    &.btn-info {
+        @apply .bg-blue-lightest .border .border-blue .text-blue-dark;
+        &:hover {
+            @apply .bg-blue-lighter .shadow-xl;
+        }
+    }
+
+    &.btn-danger {
+        @apply .bg-red-lightest .border .border-red .text-red-dark;
+        &:hover {
+            @apply .bg-red-lighter .shadow-xl;
+        }
+    }
+
+    &.btn-success {
+        @apply .bg-green-lightest .border .border-green .text-green-dark;
+        &:hover {
+            @apply .bg-green-lighter .shadow-xl;
+        }
+    }
+
+    &.btn-link {
+        @apply .text-blue .text-xs .tracking-tight .no-underline;
+        &:hover {
+            @apply .text-blue-darker .underline;
+        }
+    }
+}

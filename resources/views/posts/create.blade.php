@@ -1,10 +1,19 @@
 @extends('layouts.app')
 
+@section('head')
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+    function onSubmit(token) {
+        document.getElementById("post-form").submit();
+    }
+</script>
+@endsection
+
 @section('content')
     <div class="max-w-md w-full lg:flex mx-auto">
         <div class="bg-white m-2 p-4 flex flex-col justify-between leading-normal shadow">
             <div class="mb-2">
-                <form method="POST" action="/posts">
+                <form method="POST" action="/posts" id="post-form">
                     @csrf
                     <div class="mb-2">
                         <label for="title" class="block text-blue text-sm font-bold mb-2">{{ __('Title') }}</label>
@@ -43,7 +52,10 @@
                             required>{{ old('body') }}</textarea>
                     </div>
                     <div class="mb-2 flex justify-end">
-                        <button type="submit" class="button">
+                        <button type="submit"
+                            class="btn btn-fancy g-recaptcha"
+                            data-sitekey="6LfHt5gUAAAAAJPW2t8Zdy-pdYRivL9Z1cKV9W32"
+                            data-callback="onSubmit">
                             {{ __('Post') }}
                         </button>
                     </div>

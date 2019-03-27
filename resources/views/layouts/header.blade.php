@@ -25,7 +25,7 @@
         </li>
         @can('create', App\Post::class)
             <li class="menu-item bg-green ml-20">
-                <a href="{{ route('create-post') }}" class="menu-item-link">
+                <a href="{{ route('post.create') }}" class="menu-item-link">
                     {{ __('New Post') }}
                 </a>
             </li>

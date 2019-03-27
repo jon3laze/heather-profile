@@ -50,7 +50,7 @@
             </div>
 
             <div class="mb-3 flex justify-center">
-                <button type="submit" class="button">
+                <button type="submit" class="btn btn-fancy">
                     {{ __('Register') }}
                 </button>
             </div>

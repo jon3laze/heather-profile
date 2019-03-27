@@ -40,12 +40,12 @@
             </div>
 
             <div class="mb-3 flex justify-center">
-                <button type="submit" class="button">
+                <button type="submit" class="btn btn-fancy">
                     {{ __('Login') }}
                 </button>
 
                 @if (Route::has('password.request'))
-                    <a class="naked-link self-center" href="{{ route('password.request') }}">
+                    <a class="btn btn-link self-center" href="{{ route('password.request') }}">
                         {{ __('Forgot Your Password?') }}
                     </a>
                 @endif

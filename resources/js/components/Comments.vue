@@ -1,12 +1,17 @@
 <template>
     <div>
         <div v-for="(comment, index) in items" :key="comment.id">
-            <comment :data="comment" @destroyed="remove(index)"></comment>
+            <comment :comment="comment" @destroyed="remove(index)"></comment>
         </div>
 
         <paginator :dataSet="dataSet" @changed="fetch"></paginator>
 
-        <new-comment @created="add"></new-comment>
+        <div class="comment comment-disabled" v-if="$parent.locked">
+            <span class="text-grey">
+                <font-awesome-icon :icon="['fas', 'lock-alt']" class="mr-1"></font-awesome-icon> This post has been locked. No more comments are allowed.
+            </span>
+        </div>
+        <new-comment @created="add" v-else></new-comment>
     </div>
 </template>
 

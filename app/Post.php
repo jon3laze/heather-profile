@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Filters\PostFilters;
+use App\Events\PostHasNewComment;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -11,6 +13,10 @@ class Post extends Model
     protected $guarded = [];
 
     protected $with = ['owner', 'category'];
+
+    protected $casts = [
+        'locked' => 'boolean'
+    ];
 
     protected $appends = ['hasSubscription'];
 
@@ -22,14 +28,23 @@ class Post extends Model
             $builder->withCount('owner');
         });
 
+        static::created(function ($post) {
+            $post->update(['slug' => $post->title]);
+        });
+
         static::deleting(function ($post) {
             $post->comments->each->delete();
         });
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function path()
     {
-        return "/posts/{$this->category->slug}/{$this->id}";
+        return "/posts/{$this->category->slug}/{$this->slug}";
     }
 
     public function comments()
@@ -46,12 +61,14 @@ class Post extends Model
     {
         $comment = $this->comments()->create($comment);
 
-        $this->subscriptions
-            ->where('user_id', '!=', $comment->user_id)
-            ->each
-            ->notify($comment);
+        event(new PostHasNewComment($this, $comment));
 
         return $comment;
+    }
+
+    public function scopeFilter($query, PostFilters $filters)
+    {
+        return $filters->apply($query);
     }
 
     public function category()
@@ -85,5 +102,35 @@ class Post extends Model
         return $this->subscriptions()
             ->where('user_id', auth()->id())
             ->exists();
+    }
+
+    public function hasUpdatesFor($user = null)
+    {
+        $user = $user ?: auth()->user();
+
+        $key = $user->visitedPostCacheKey($this);
+
+        return $this->updated_at > cache($key);
+    }
+
+    public function visits()
+    {
+        return new Visits($this);
+    }
+
+    public function setSlugAttribute($value)
+    {
+        $slug = str_slug($value);
+
+        if (static::whereSlug($slug)->exists()) {
+            $slug = "{$slug}-" . $this->id;
+        }
+
+        $this->attributes['slug'] = $slug;
+    }
+
+    public function saveBestComment(Comment $comment)
+    {
+        $this->update(['best_comment_id' => $comment->id]);
     }
 }

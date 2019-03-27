@@ -15,6 +15,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Post' => 'App\Policies\PostPolicy',
         'App\Comment' => 'App\Policies\CommentPolicy',
+        'App\User' => 'App\Policies\UserPolicy',
     ];
 
     /**
@@ -27,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::before(function ($user) {
-            if ($user->id === 301) {
+            if ($user->id === 1) {
                 return true;
             }
         });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Comment;
+use App\Http\Forms\CreatePostForm;
 
 class CommentController extends Controller
 {
@@ -12,23 +13,13 @@ class CommentController extends Controller
         return $post->comments()->paginate(5);
     }
 
-    public function store($categoryId, Post $post)
+    public function store($categoryId, Post $post, CreatePostForm $form)
     {
-        $this->validate(request(), [
-            'body' => 'required'
-        ]);
-
-        $comment = $post->addComment([
-            'body' => request('body'),
-            'user_id' => auth()->id()
-        ]);
-
-        if (request()->expectsJson()) {
-            return $comment->load('owner');
+        if ($post->locked) {
+            return response('Locked', 423);
         }
 
-        return back()
-            ->with('flash', 'Your comment has been posted.');
+        return $form->persist($post);
     }
 
     /**
@@ -50,12 +41,18 @@ class CommentController extends Controller
         return back();
     }
 
+    /**
+     * Updated specified resource.
+     *
+     * @param  Comment $comment
+     * @return \Illuminate\Http\Response
+     */
     public function update(Comment $comment)
     {
         $this->authorize('update', $comment);
 
-        $comment->update(request(['body']));
+        request()->validate(['body' => 'required|spamfree']);
 
-        return back();
+        $comment->update(request(['body']));
     }
 }

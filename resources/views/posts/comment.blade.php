@@ -15,7 +15,7 @@
                         >{{ old('body') }}</textarea>
                 </div>
                 <div class="mb-3 flex justify-end">
-                    <button type="submit" class="button">
+                    <button type="submit" class="btn btn-fancy">
                         {{ __('Comment') }}
                     </button>
                 </div>

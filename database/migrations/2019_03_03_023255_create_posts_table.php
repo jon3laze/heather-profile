@@ -15,11 +15,20 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('slug')->unique()->nullable();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('category_id');
+            $table->unsignedInteger('comments_count')->default(0);
             $table->string('title');
             $table->text('body');
+            $table->unsignedInteger('best_comment_id')->nullable();
+            $table->boolean('locked')->default(false);
             $table->timestamps();
+
+            $table->foreign('best_comment_id')
+                ->references('id')
+                ->on('comments')
+                ->onDelete('set null');
         });
     }
 

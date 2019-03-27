@@ -30,7 +30,11 @@ class CommentPolicy
      */
     public function create(User $user)
     {
-        //
+        if (! $lastComment = $user->fresh()->lastComment) {
+            return true;
+        }
+
+        return ! $lastComment->wasJustPublished();
     }
 
     /**
