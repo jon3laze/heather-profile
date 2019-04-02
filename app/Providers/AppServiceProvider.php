@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
         \View::composer('posts.create', function ($view) {
             $categories = \Cache::rememberForever('categories', function () {
                 return Category::all();
